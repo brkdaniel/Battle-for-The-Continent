@@ -1,0 +1,26 @@
+name: C++ CI
+
+# Rulează la fiecare 'push' sau 'pull request'
+on: [push, pull_request]
+
+jobs:
+  build:
+    # Folosește un sistem de operare standard (Linux)
+    runs-on: ubuntu-latest
+
+    steps:
+    # Pasul 1: Descarcă codul tău din repository
+    - uses: actions/checkout@v2
+
+    # Pasul 2: Compilează codul
+    # Presupunem că tot codul tău e într-un singur fișier .cpp
+    # 'g++ *.cpp' compilează toate fișierele .cpp
+    # '-std=c++17' folosește standardul C++17
+    # '-o build' creează un executabil numit 'build'
+    - name: Compile
+      run: g++ *.cpp -std=c++17 -o build
+
+    # Pasul 3: Rulează demo-ul (folosind tastatura.txt)
+    # Acest pas simulează exact ce ar face profesorul tău
+    - name: Run Demo
+      run: ./build < tastatura.txt
