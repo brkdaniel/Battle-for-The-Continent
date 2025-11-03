@@ -107,9 +107,7 @@ class Row {
     }
     bool canAddCard(const Card& card) const {
         CardType card_type = card.getType();
-        if (card_type == CardType::SPELL) {
-            return false; //inca nu am implementat functionalitatea SPELL
-        }
+
         switch (card_type) {
             case CardType::MELEE:
                 return (type == RowType::MELEE);
@@ -117,6 +115,9 @@ class Row {
                 return (type == RowType::RANGED);
             case CardType::SIEGE:
                 return (type == RowType::SIEGE);
+            case CardType::SPELL:
+                    return false;         //inca nu am implementat functionalitatea SPELL
+
         }
         return false;
     }
