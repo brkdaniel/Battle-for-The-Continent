@@ -4,25 +4,33 @@
 #pragma once
 #include <vector>
 #include <iostream>
-#include "Card.h"
+#include "Card.h" // Include baza abstractă
 
 class Deck {
 private:
-    std::vector<Card> cards;
+    // SCHIMBARE MAJORĂ: Vector de pointeri, nu de obiecte
+    std::vector<Card*> cards;
 
 public:
     Deck() = default;
+
+    // 1. Destructor (Trebuie să șteargă pointerii!)
     ~Deck();
 
-    // Constructor de copiere
+    // 2. Constructor de Copiere (Deep Copy)
     Deck(const Deck& other);
 
-    // Operator de atribuire
+    // 3. Operator de atribuire (Copy-and-Swap sau clasic)
     Deck& operator=(const Deck& other);
 
-    void addCard(const Card& card);
+    // Modificăm addCard să ia pointeri (sau să creeze pointeri)
+    // Varianta care ia pointer transferă responsabilitatea
+    void addCard(Card* card);
+
     void shuffle();
-    Card draw();
+
+    // Returnează pointer, nu obiect
+    Card* draw();
 
     friend std::ostream& operator<<(std::ostream& os, const Deck& d);
 };

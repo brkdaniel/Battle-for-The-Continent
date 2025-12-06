@@ -61,6 +61,8 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         Row.cpp
         Player.h
         Player.cpp
+        UnitCard.h
+        UnitCard.cpp
 
 )
 

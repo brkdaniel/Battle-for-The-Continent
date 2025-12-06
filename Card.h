@@ -4,34 +4,30 @@
 #pragma once
 #include <string>
 #include <iostream>
-#include "Enums.h"
-#include "CardStats.h"
 
+// CLASA ABSTRACTĂ (Base Class)
 class Card {
-private:
-    std::string name;
-    int power;
-    int card_ID;
-    bool is_gold;
-    CardStats stats;
-    CardType type;
+protected:
+    std::string name; // Singurul atribut comun tuturor
 
 public:
-    Card(std::string n, int p, int id, bool gold, CardType t, bool immune);
+    Card(const std::string& n);
 
-    std::string getName() const;
-    int getBasePower() const;
-    int getID() const;
-    bool isGold() const;
-    CardType getType() const;
+    // 1. Destructor Virtual (CRITIC pentru vector<Card*>)
+    virtual ~Card() = default;
 
-    // Delegare către stats
-    int getCurrentPower() const;
-    const CardStats& getStats() const;
+    // 2. Funcție Virtuală Pură (Interfața de afișare)
+    virtual void printDetails(std::ostream& os) const = 0;
 
-    friend std::ostream& operator<<(std::ostream& os, const Card& card);
+    // 3. Constructor Virtual (Clone)
+    // Ne ajută să facem copii corecte (Deep Copy) fără să știm tipul exact
+    virtual Card* clone() const = 0;
+
+    const std::string& getName() const;
+
+    // Operator << care apelează funcția virtuală
+    friend std::ostream& operator<<(std::ostream& os, const Card& c);
 };
-
 #ifndef OOP_CARD_H
 #define OOP_CARD_H
 

@@ -11,17 +11,17 @@
 class Row {
 private:
     RowType type;
-    std::vector<Card> cards;
+    std::vector<Card*> cards;
     bool has_horn;
 
     int calculateBasePower() const;
-    bool canAddCard(const Card& card) const;
+    bool canAddCard(Card *card) const;
 
 public:
-    Row(RowType t);
-    void addCard(const Card& card);
+    explicit Row(RowType t);
+    void addCard(Card* card);
     int calculatePower() const;
-
+    ~Row();
     friend std::ostream& operator<<(std::ostream& os, const Row& r);
 };
 
