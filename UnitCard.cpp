@@ -6,7 +6,7 @@
 // Apelăm constructorul bazei (: Card(n))
 UnitCard::UnitCard(std::string n, int p, int id, bool gold, CardType t, bool immune)
     : Card(n), // Inițializăm numele în clasa de bază
-      power(p), card_ID(id), is_gold(gold), stats(p, immune), type(t)
+      card_ID(id), is_gold(gold), stats(p, immune), type(t)
 {}
 
 void UnitCard::printDetails(std::ostream& os) const {
@@ -21,5 +21,7 @@ Card* UnitCard::clone() const {
 }
 
 int UnitCard::getCurrentPower() const { return stats.getCurrentPower(); }
+int UnitCard::getID() const { return card_ID; }
 CardType UnitCard::getType() const { return type; }
+
 bool UnitCard::isGold() const { return is_gold; }

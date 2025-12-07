@@ -3,6 +3,7 @@
 //
 #include "Row.h"
 #include "UnitCard.h" // <--- OBLIGATORIU: Trebuie să știm de UnitCard pentru dynamic_cast
+#include "GwentExceptions.h"
 
 Row::Row(RowType t) : type(t), has_horn(false) {}
 
@@ -57,12 +58,23 @@ void Row::addCard(Card* card) {
     if (canAddCard(card)) {
         cards.push_back(card);
     } else {
-        std::cout << "ERROR: Card [" << card->getName()
-                  << "] cannot be placed on this row.\n";
-        // IMPORTANT: Dacă refuzăm cartea, cineva trebuie să o șteargă!
-        // Deoarece Deck-ul a dat-o deja afară (pop_back), ea a rămas în aer.
-        // O ștergem aici ca să nu avem memory leak.
+        // Pregătim numele rândului pentru mesajul de eroare
+        std::string rowName;
+        switch(type) {
+            case RowType::MELEE: rowName = "MELEE"; break;
+            case RowType::RANGED: rowName = "RANGED"; break;
+            case RowType::SIEGE: rowName = "SIEGE"; break;
+        }
+
+        // Luăm numele cărții înainte să o ștergem (pentru mesaj)
+        std::string cardName = card->getName();
+
+        // IMPORTANT: Ștergem cartea pentru că Deck-ul nu o mai are,
+        // iar Row-ul refuză să o ia. Dacă nu dăm delete, rămâne în memorie.
         delete card;
+
+        // ARUNCĂM EXCEPȚIA
+        throw InvalidMoveException(cardName, rowName);
     }
 }
 

@@ -9,12 +9,14 @@
 class Card {
 protected:
     std::string name; // Singurul atribut comun tuturor
+    static int totalCardsCreated;
 
 public:
     Card(const std::string& n);
-
+    //functie pt a citi contorul
+    static int getTotalCards();
     // 1. Destructor Virtual (CRITIC pentru vector<Card*>)
-    virtual ~Card() = default;
+    virtual ~Card();
 
     // 2. Funcție Virtuală Pură (Interfața de afișare)
     virtual void printDetails(std::ostream& os) const = 0;

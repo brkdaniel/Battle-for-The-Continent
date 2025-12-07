@@ -9,7 +9,6 @@
 // CLASA DERIVATĂ (Is-A Card)
 class UnitCard : public Card {
 private:
-    int power;
     int card_ID;
     bool is_gold;
     CardStats stats;
@@ -27,6 +26,7 @@ public:
 
     // Getters vechi (mutati aici)
     int getCurrentPower() const;
+    int getID() const;
     CardType getType() const;
     bool isGold() const;
 };

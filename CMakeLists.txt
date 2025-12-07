@@ -63,6 +63,11 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         Player.cpp
         UnitCard.h
         UnitCard.cpp
+        GwentExceptions.h
+        WeatherCard.h
+        WeatherCard.cpp
+        SpecialCard.h
+        SpecialCard.cpp
 
 )
 

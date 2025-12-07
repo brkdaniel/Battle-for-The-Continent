@@ -3,7 +3,20 @@
 //
 #include "Card.h"
 
-Card::Card(const std::string& n) : name(n) {}
+int Card::totalCardsCreated = 0;
+
+Card::Card(const std::string& n) : name(n) {
+    totalCardsCreated++;
+}
+
+Card::~Card() {
+    totalCardsCreated--;
+}
+
+int Card::getTotalCards() {
+    return totalCardsCreated;
+}
+
 
 const std::string& Card::getName() const {
     return name;

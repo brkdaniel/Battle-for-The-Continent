@@ -6,6 +6,8 @@
 #include <random>    // Pentru random_device
 #include <stdexcept> // Pentru runtime_error
 
+#include "GwentExceptions.h"
+
 // 1. DESTRUCTORUL - Curăță memoria
 Deck::~Deck() {
     for (Card* c : cards) {
@@ -25,22 +27,24 @@ Deck::Deck(const Deck& other) {
 }
 
 // 3. OPERATORUL = (Assignment)
-Deck& Deck::operator=(const Deck& other) {
-    std::cout << "Deck copy assignment\n";
-    if (this == &other) {
-        return *this; // Auto-atribuire
-    }
+// Funcția swap schimbă pointerii interni între două obiecte Deck
+void swap(Deck& first, Deck& second) noexcept {
+    using std::swap;
+    // Schimbăm vectorii. Pointerii la cărți rămân valizi, doar se mută.
+    swap(first.cards, second.cards);
+}
 
-    // Pasul 1: Curățăm memoria veche (ca în destructor)
-    for (Card* c : cards) {
-        delete c;
-    }
-    cards.clear();
+// Operatorul de atribuire prin Copy-and-Swap
+// Parametrul 'other' este deja o copie (construită cu Copy Constructor)
+Deck& Deck::operator=(Deck other) {
+    std::cout << "Deck copy assignment (via Copy-and-Swap)\n";
 
-    // Pasul 2: Copiem elementele noi (ca în copy constructor)
-    for (const auto* c : other.cards) {
-        cards.push_back(c->clone());
-    }
+    // Facem schimb între noi ('this') și copia temporară ('other')
+    swap(*this, other);
+
+    // Acum 'this' are datele noi, iar 'other' are datele vechi (gunoiul).
+    // Când funcția se termină, destructorul lui 'other' va fi apelat automat
+    // și va șterge memoria veche. Curat și sigur!
 
     return *this;
 }
@@ -59,7 +63,7 @@ void Deck::shuffle() {
 
 Card* Deck::draw() {
     if (cards.empty()) {
-        throw std::runtime_error("You have no cards left to draw.");
+        throw EmptyDeckException();
     }
 
     // Luăm pointerul

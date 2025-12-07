@@ -20,8 +20,14 @@ public:
     // 2. Constructor de Copiere (Deep Copy)
     Deck(const Deck& other);
 
-    // 3. Operator de atribuire (Copy-and-Swap sau clasic)
-    Deck& operator=(const Deck& other);
+    // // 3. Operator de atribuire (Copy-and-Swap sau clasic)
+    // Deck& operator=(const Deck& other);
+
+    // NOU: Primește parametrul prin VALOARE (se face o copie automată)
+    Deck& operator=(Deck other);
+
+    // NOU: Funcție prietenă pentru swap eficient
+    friend void swap(Deck& first, Deck& second) noexcept;
 
     // Modificăm addCard să ia pointeri (sau să creeze pointeri)
     // Varianta care ia pointer transferă responsabilitatea
