@@ -1,125 +1,161 @@
 #include <iostream>
+#include <fstream>
+#include <string>
+
 #include "Player.h"
 #include "UnitCard.h"
 #include "WeatherCard.h"
 #include "SpecialCard.h"
 #include "GwentExceptions.h"
 
+// --- FUNCȚIE FACTORY: Citește fișierul și populează pachetul ---
+void loadCardsFromFile(const std::string& filename, Deck& deck) {
+    std::ifstream file(filename);
+
+    // Verificăm dacă fișierul s-a deschis
+    if (!file.is_open()) {
+        throw FileReadException(filename);
+    }
+
+    std::cout << ">> Reading cards from file: " << filename << "...\n";
+
+    int type;
+    // Citim tipul cărții (primul număr de pe linie)
+    while (file >> type) {
+        std::string name;
+        file >> name; // Citim numele
+
+        Card* newCard = nullptr;
+
+        if (type == 1) {
+            // === UNIT CARD ===
+            // Format: Putere ID Gold Rand Imun
+            int power, id, rowInt;
+            bool isGold, isImmune;
+
+            file >> power >> id >> isGold >> rowInt >> isImmune;
+
+            // Cast de la int la Enum
+            auto cardType = static_cast<CardType>(rowInt);
+
+            newCard = new UnitCard(name, power, id, isGold, cardType, isImmune);
+        }
+        else if (type == 2) {
+            // === WEATHER CARD ===
+            // Format: Rand_Afectat
+            int rowInt;
+            file >> rowInt;
+            auto row = static_cast<RowType>(rowInt);
+
+            newCard = new WeatherCard(name, row);
+        }
+        else if (type == 3) {
+            // === SPECIAL CARD ===
+            // Format: Descriere
+            std::string desc;
+            file >> desc;
+
+            newCard = new SpecialCard(name, desc);
+        }
+
+        // Adăugăm cartea creată în pachet
+        if (newCard != nullptr) {
+            deck.addCard(newCard);
+        }
+    }
+
+    file.close();
+    std::cout << ">> File read successfully.\n";
+}
+
 int main() {
     std::cout << "=== MILESTONE 2 DEMO START ===\n\n";
 
-    // ---------------------------------------------------------
-    // ETAPA 1: Instanțierea Jucătorului și Crearea Cărților
-    // ---------------------------------------------------------
-    std::cout << "*** 1. Loading Player & Creating Cards (Dynamic Memory) ***" << std::endl;
-    Player playerNo1("Daniel", "Northern Realms");
-
-    // Folosim 'new' și pointeri la clasa de bază (Polimorfism)
-    // Cerinta M2: Vector de pointeri la baza abstracta
-    Card* c1 = new UnitCard("Knight", 3, 1, false, CardType::MELEE, false);
-    Card* c2 = new UnitCard("Archer", 4, 2, true, CardType::RANGED, false);
-    Card* c3 = new UnitCard("Ballista", 7, 3, false, CardType::SIEGE, true);
-    Card* c4 = new UnitCard("Ram", 2, 4, false, CardType::SIEGE, true);
-    Card* c5 = new UnitCard("Geralt", 10, 5, true, CardType::MELEE, true); // Hero
-    Card* c6 = new UnitCard("Dandelion", 4, 6, false, CardType::MELEE, false);
-    Card* c7 = new UnitCard("Yennefer", 7, 7, false, CardType::RANGED, true);
-
-    // Cerinta M2: Minim 3 clase derivate (Unit, Weather, Special)
-    Card* c8 = new WeatherCard("Biting Frost", RowType::MELEE);
-    Card* c9 = new SpecialCard("Scorch", "Destroy strongest unit");
-
-    // ---------------------------------------------------------
-    // ETAPA 2: Adăugarea în Deck (Ownership Transfer)
-    // ---------------------------------------------------------
-    std::cout << "*** 2. Adding Cards to Deck ***" << std::endl;
-    // Deck-ul preia responsabilitatea pointerilor. Nu mai trebuie să facem noi 'delete'.
-    playerNo1.getDeck().addCard(c1);
-    playerNo1.getDeck().addCard(c2);
-    playerNo1.getDeck().addCard(c3);
-    playerNo1.getDeck().addCard(c4);
-    playerNo1.getDeck().addCard(c5);
-    playerNo1.getDeck().addCard(c6);
-    playerNo1.getDeck().addCard(c7);
-    playerNo1.getDeck().addCard(c8);
-    playerNo1.getDeck().addCard(c9);
-
-    // Testăm afișarea (Polimorfism: operator<< virtual)
-    std::cout << playerNo1 << std::endl;
-
-    // Verificăm membrul Static
-    std::cout << "-> Total Cards Created (Static): " << Card::getTotalCards() << "\n";
-
-    // ---------------------------------------------------------
-    // ETAPA 3: Testăm Shuffle
-    // ---------------------------------------------------------
-    std::cout << "\n*** 3. Shuffling ***" << std::endl;
-    playerNo1.getDeck().shuffle();
-    std::cout << "Deck shuffled.\n";
-
-    // ---------------------------------------------------------
-    // ETAPA 4: Testăm Copy-and-Swap (Atribuire și Deep Copy)
-    // ---------------------------------------------------------
-    std::cout << "\n*** 4. Testing Copy-and-Swap Operator ***" << std::endl;
-    {
-        Deck deckSursa = playerNo1.getDeck(); // Copy Constructor
-        Deck deckDestinatie;
-
-        // Adăugăm o carte "gunoi" în destinație ca să vedem că se șterge la atribuire
-        deckDestinatie.addCard(new UnitCard("Junk_Card", 1, 99, false, CardType::SIEGE, false));
-
-        std::cout << "   [Before Assignment] Destinatie size: 1 (Junk)\n";
-
-        // TEST CRITIC: Atribuirea
-        deckDestinatie = deckSursa;
-        std::cout << "   [After Assignment] deckDestinatie = deckSursa executed.\n";
-
-        // Testăm Deep Copy (Independența)
-        std::cout << "   [Independence Check] Modifying Source (Shuffle)...\n";
-        deckSursa.shuffle();
-
-        std::cout << "   Daca Deep Copy merge, Destinatia NU trebuie sa fie afectata de shuffle-ul sursei.\n";
-        // La ieșirea din scope {}, destructorii vor curăța tot.
-    }
-    std::cout << "Copy-and-Swap test finished (check for crashes/leaks).\n";
-
-    // ---------------------------------------------------------
-    // ETAPA 5: Game Logic & Exceptions (Draw & Play)
-    // ---------------------------------------------------------
-    std::cout << "\n*** 5. Drawing and Playing (Testing Exceptions) ***" << std::endl;
     try {
-        // Cazul 1: Succes
-        Card* drawn1 = playerNo1.getDeck().draw();
-        std::cout << "1. You drew: " << drawn1->getName() << "\n";
-        playerNo1.getMeleeRow().addCard(drawn1); // Ar trebui să meargă dacă e Melee sau Hero-Melee
-        std::cout << "   -> Placed successfully.\n";
+        // ---------------------------------------------------------
+        // ETAPA 1: Instanțierea Jucătorului
+        // ---------------------------------------------------------
+        std::cout << "*** 1. Loading Player ***" << std::endl;
+        Player playerNo1("Daniel", "Northern Realms");
 
-        // Cazul 2: Posibilă Eroare (Invalid Move)
-        // Extragem o carte și încercăm să o forțăm pe un rând (demo)
-        Card* drawn2 = playerNo1.getDeck().draw();
-        std::cout << "2. You drew: " << drawn2->getName() << "\n";
+        // ---------------------------------------------------------
+        // ETAPA 2: Citirea din Fișier (Factory Pattern)
+        // ---------------------------------------------------------
+        std::cout << "*** 2. Loading Cards from 'cards.txt' ***" << std::endl;
 
-        // Încercăm să o punem tot pe Melee. Dacă e Ranged/Siege/Weather, va arunca excepție.
-        std::cout << "   -> Attempting to place on MELEE row...\n";
-        playerNo1.getMeleeRow().addCard(drawn2);
-        std::cout << "   -> Placed successfully.\n";
+        // Aici apelăm funcția magică
+        loadCardsFromFile("cards.txt", playerNo1.getDeck());
 
-    } catch (const EmptyDeckException& e) {
-        std::cout << "RESOURCE ERROR: " << e.what() << "\n";
-    } catch (const InvalidMoveException& e) {
-        std::cout << "LOGIC ERROR: " << e.what() << "\n";
-    } catch (const GwentException& e) {
-        std::cout << "GWENT ERROR: " << e.what() << "\n";
-    } catch (const std::exception& e) {
-        std::cout << "UNKNOWN EXCEPTION: " << e.what() << "\n";
+        // Testăm afișarea (Polimorfism: operator<< virtual)
+        // Ar trebui să vezi Unități, Vreme și Speciale amestecate
+        std::cout << "\n[Initial Deck State]:\n" << playerNo1 << std::endl;
+
+        // Verificăm membrul Static
+        std::cout << "-> Total Cards Created (Static): " << Card::getTotalCards() << "\n";
+
+        // ---------------------------------------------------------
+        // ETAPA 3: Testăm Shuffle
+        // ---------------------------------------------------------
+        std::cout << "\n*** 3. Shuffling ***" << std::endl;
+        playerNo1.getDeck().shuffle();
+        std::cout << "Deck shuffled.\n";
+
+        // ---------------------------------------------------------
+        // ETAPA 4: Testăm Copy-and-Swap
+        // ---------------------------------------------------------
+        std::cout << "\n*** 4. Testing Copy-and-Swap Operator ***" << std::endl;
+        {
+            Deck deckSursa = playerNo1.getDeck();
+            Deck deckDestinatie;
+            deckDestinatie.addCard(new UnitCard("Junk", 1, 99, false, CardType::SIEGE, false));
+
+            deckDestinatie = deckSursa; // Assignment
+
+            std::cout << "   [Independence Check] Shuffling Source...\n";
+            deckSursa.shuffle(); // Destinatia nu trebuie sa se schimbe
+        }
+        std::cout << "Copy-and-Swap test finished.\n";
+
+        // ---------------------------------------------------------
+        // ETAPA 5: Game Logic & Exceptions (Draw & Play)
+        // ---------------------------------------------------------
+        std::cout << "\n*** 5. Drawing and Playing (Testing Exceptions) ***" << std::endl;
+
+        // Tragem 3 cărți și încercăm să le jucăm
+        for(int i = 0; i < 3; ++i) {
+            try {
+                Card* drawn = playerNo1.getDeck().draw();
+                std::cout << "Draw " << (i+1) << ": " << drawn->getName() << " ... ";
+
+                // Încercăm să le punem pe toate pe MELEE
+                // Dacă e Vreme, Specială sau Ranged/Siege, va da eroare
+                playerNo1.getMeleeRow().addCard(drawn);
+                std::cout << "Placed on Melee.\n";
+
+            } catch (const InvalidMoveException& e) {
+                std::cout << "Logic Error: " << e.what() << "\n";
+            } catch (const EmptyDeckException& e) {
+                std::cout << "Deck Empty: " << e.what() << "\n";
+                break;
+            }
+        }
+
+        // ---------------------------------------------------------
+        // ETAPA 6: Starea Finală
+        // ---------------------------------------------------------
+        std::cout << "\n*** 6. Final Game State ***\n";
+        std::cout << playerNo1;
+        std::cout << "Final Total Cards: " << Card::getTotalCards() << "\n";
+
+    }
+    catch (const FileReadException& e) {
+        std::cout << "CRITICAL: " << e.what() << "\n";
+        std::cout << "HINT: Make sure 'cards.txt' is in the correct folder!\n";
+    }
+    catch (const std::exception& e) {
+        std::cout << "UNEXPECTED ERROR: " << e.what() << "\n";
     }
 
-    // ---------------------------------------------------------
-    // ETAPA 6: Starea Finală
-    // ---------------------------------------------------------
-    std::cout << "\n*** 6. Final Game State ***\n";
-    std::cout << playerNo1;
-
-    std::cout << "Final Total Cards (Static Check): " << Card::getTotalCards() << "\n";
     std::cout << "\n=== DEMO END ===\n";
     return 0;
 }
