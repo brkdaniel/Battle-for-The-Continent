@@ -16,7 +16,6 @@ public:
     void printDetails(std::ostream& os) const override;
     Card* clone() const override;
 
-    RowType getAffectedRow() const;
 };
 
 #ifndef OOP_WEATHEREFFECT_H

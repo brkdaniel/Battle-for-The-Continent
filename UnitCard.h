@@ -16,7 +16,7 @@ private:
 
 public:
     // Constructor
-    UnitCard(std::string n, int p, int id, bool gold, CardType t, bool immune);
+    UnitCard(const std::string& n, int p, int id, bool gold, CardType t, bool immune);
 
     // Suprascrierea funcțiilor virtuale (Override)
     void printDetails(std::ostream& os) const override;

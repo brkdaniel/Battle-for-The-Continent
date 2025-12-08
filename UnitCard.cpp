@@ -4,7 +4,7 @@
 #include "UnitCard.h"
 
 // Apelăm constructorul bazei (: Card(n))
-UnitCard::UnitCard(std::string n, int p, int id, bool gold, CardType t, bool immune)
+UnitCard::UnitCard(const std::string& n, int p, int id, bool gold, CardType t, bool immune)
     : Card(n), // Inițializăm numele în clasa de bază
       card_ID(id), is_gold(gold), stats(p, immune), type(t)
 {}

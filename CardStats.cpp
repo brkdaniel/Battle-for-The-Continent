@@ -12,9 +12,6 @@ int CardStats::getCurrentPower() const {
     return current_power;
 }
 
-bool CardStats::isImmune() const {
-    return is_weather_immune;
-}
 
 std::ostream& operator<<(std::ostream& os, const CardStats& stats) {
     os << " POWER: " << stats.current_power;

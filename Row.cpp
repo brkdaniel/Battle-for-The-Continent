@@ -32,7 +32,7 @@ int Row::calculateBasePower() const {
 bool Row::canAddCard(Card* card) const {
     // Folosim dynamic_cast pentru a verifica tipul și a accesa getType()
     // (care există doar în UnitCard, nu și în Card abstract)
-    auto* unit = dynamic_cast<UnitCard*>(card);
+    const auto* unit = dynamic_cast<UnitCard*>(card);
 
     if (!unit) {
         // Dacă nu e unitate (ex: e vrajă), momentan zicem false

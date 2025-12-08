@@ -14,7 +14,3 @@ void WeatherCard::printDetails(std::ostream& os) const {
 Card* WeatherCard::clone() const {
     return new WeatherCard(*this);
 }
-
-RowType WeatherCard::getAffectedRow() const {
-    return affectedRow;
-}

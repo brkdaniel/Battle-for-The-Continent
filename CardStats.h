@@ -15,7 +15,6 @@ public:
     CardStats(int power, bool immune);//power(p) - liste de initializare -> power = p
 
     int getCurrentPower() const;
-    bool isImmune() const;
 
     friend std::ostream& operator<<(std::ostream& os, const CardStats& stats);
 };
