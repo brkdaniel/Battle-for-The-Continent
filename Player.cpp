@@ -14,8 +14,8 @@ Player::Player(std::string n, std::string faction)
 
 Deck& Player::getDeck() { return deck; }
 Row& Player::getMeleeRow() { return melee_row; }
-Row& Player::getRangedRow() { return ranged_row; }
-Row& Player::getSiegeRow() { return siege_row; }
+// Row& Player::getRangedRow() { return ranged_row; }
+// Row& Player::getSiegeRow() { return siege_row; }
 
 std::ostream& operator<<(std::ostream& os, const Player& p) {
     os << "*** PLAYER " << p.name << " HAS A " << p.faction_name << " DECK" << std::endl;

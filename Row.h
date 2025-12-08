@@ -19,9 +19,14 @@ private:
 
 public:
     explicit Row(RowType t);
+    ~Row();
+
+    // Dezactivăm copierea pentru a preveni erori de memorie accidentale
+    Row(const Row&) = delete;
+    Row& operator=(const Row&) = delete;
+
     void addCard(Card* card);
     int calculatePower() const;
-    ~Row();
     friend std::ostream& operator<<(std::ostream& os, const Row& r);
 };
 

@@ -21,7 +21,5 @@ Card* UnitCard::clone() const {
 }
 
 int UnitCard::getCurrentPower() const { return stats.getCurrentPower(); }
-int UnitCard::getID() const { return card_ID; }
 CardType UnitCard::getType() const { return type; }
 
-bool UnitCard::isGold() const { return is_gold; }
