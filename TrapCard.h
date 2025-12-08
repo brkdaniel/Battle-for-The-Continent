@@ -1,0 +1,23 @@
+//
+// Created by danie on 12/8/2025.
+//
+#pragma once
+#include "Card.h"
+#include "Enums.h"
+
+class TrapCard : public Card {
+private:
+    RowType row;
+    int damage; // Cât damage dă când e declanșată
+
+public:
+    TrapCard(const std::string& n, RowType r, int dmg);
+
+    void printDetails(std::ostream& os) const override;
+    Card* clone() const override;
+};
+
+#ifndef OOP_TRAPCARDS_H
+#define OOP_TRAPCARDS_H
+
+#endif //OOP_TRAPCARDS_H

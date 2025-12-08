@@ -7,6 +7,7 @@
 #include "WeatherCard.h"
 #include "SpecialCard.h"
 #include "GwentExceptions.h"
+#include "TrapCard.h"
 
 // --- FUNCȚIE FACTORY: Citește fișierul și populează pachetul ---
 void loadCardsFromFile(const std::string& filename, Deck& deck) {
@@ -56,6 +57,15 @@ void loadCardsFromFile(const std::string& filename, Deck& deck) {
             file >> desc;
 
             newCard = new SpecialCard(name, desc);
+        }
+        else if (type == 4) {
+            // === TRAP CARD ===
+            // Format: Rand Damage
+            int rowInt, dmg;
+            file >> rowInt >> dmg;
+            auto row = static_cast<RowType>(rowInt);
+
+            newCard = new TrapCard(name, row, dmg);
         }
 
         // Adăugăm cartea creată în pachet

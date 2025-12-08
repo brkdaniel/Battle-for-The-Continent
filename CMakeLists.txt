@@ -68,6 +68,8 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         WeatherCard.cpp
         SpecialCard.h
         SpecialCard.cpp
+        TrapCard.h
+        TrapCard.cpp
 
 )
 
