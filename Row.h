@@ -12,7 +12,7 @@ class Row {
 private:
     RowType type;
     std::vector<Card*> cards;
-    bool has_horn;
+    bool has_horn = false;
 
     int calculateBasePower() const;
     bool canAddCard(Card *card) const;

@@ -59,7 +59,7 @@ void Row::addCard(Card* card) {
         cards.push_back(card);
     } else {
         // Pregătim numele rândului pentru mesajul de eroare
-        std::string rowName;
+        std::string rowName = "UNKNOWN"; // masura preventiva
         switch(type) {
             case RowType::MELEE: rowName = "MELEE"; break;
             case RowType::RANGED: rowName = "RANGED"; break;

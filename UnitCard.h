@@ -9,8 +9,8 @@
 // CLASA DERIVATĂ (Is-A Card)
 class UnitCard : public Card {
 private:
-    int card_ID;
-    bool is_gold;
+    int card_ID = 0;
+    bool is_gold = false;
     CardStats stats;
     CardType type;
 

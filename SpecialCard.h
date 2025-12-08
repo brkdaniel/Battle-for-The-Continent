@@ -7,7 +7,7 @@
 
 class SpecialCard : public Card {
 private:
-    std::string effectDescription;
+    std::string effectDescription = "UNKNOWN";
 
 public:
     SpecialCard(const std::string& n, const std::string& desc);
