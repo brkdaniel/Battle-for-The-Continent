@@ -18,7 +18,7 @@ jobs:
     # '-std=c++17' folosește standardul C++17
     # '-o build' creează un executabil numit 'build'
     - name: Compile
-      run: g++ *.cpp -std=c++17 -o build
+      run: g++ src/*.cpp -std=c++17 -o build
 
     # Pasul 3: Rulează demo-ul (folosind tastatura.txt)
     # Acest pas simulează exact ce ar face profesorul tău

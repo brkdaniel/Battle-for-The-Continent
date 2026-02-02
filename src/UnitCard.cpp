@@ -5,7 +5,7 @@ UnitCard::UnitCard(const std::string &n, int p, int id, bool gold, CardType t, b
 }
 
 void UnitCard::printDetails(std::ostream &os) const {
-    os << "[Unit: " << name << " | Pwr: " << power;
+    os << "[Unit: " << name << " | ID: " << cardId << " | Pwr: " << power;
     if (isGold) os << " (Gold)";
     if (isImmune) os << " (Immune)";
     os << "]";
@@ -16,7 +16,7 @@ Card *UnitCard::clone() const {
 }
 
 bool UnitCard::canBePlayedOn(RowType targetRow) const {
-    if (isGold) return true; // Eroii pot fi jucati oriunde (sau conform regulilor tale)
+    if (isGold) return true;
     return static_cast<RowType>(type) == targetRow;
 }
 

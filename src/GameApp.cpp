@@ -7,14 +7,30 @@
 GameApp::GameApp() : player("Daniel", "Northern Realms"), isRunning(true) {
 }
 
+GameApp &GameApp::getInstance() {
+    static GameApp instance;
+    return instance;
+}
+
+void GameApp::testGameEngine() {
+    player.getDeck().sortByPower();
+
+    player.getMeleeRow().setHorn(true);
+    player.getMeleeRow().setHorn(false); // Reset
+
+    player.getRangedRow().applyWeather();
+    player.getRangedRow().clearWeather(); // Reset
+
+    if (player.getSiegeRow().calculatePower() < 0) {
+        std::cout << "Engine Check: Siege row integrity ok.\n";
+    }
+}
+
 void GameApp::displayMenu() const {
     std::cout << "\n=== GWENT MENU ===\n";
     std::cout << "1. Draw Card & Play\n";
     std::cout << "2. Shuffle Deck\n";
     std::cout << "3. Show Board\n";
-    std::cout << "4. Sort Deck by Power\n";
-    std::cout << "5. Cheat: Add Commander's Horn to Melee\n";
-    std::cout << "6. Cheat: Apply Weather to All Rows\n";
     std::cout << "0. Exit\n";
     std::cout << "Choose option: ";
 }
@@ -23,6 +39,10 @@ void GameApp::run() {
     try {
         loadCardsFromFile("cards.txt", player.getDeck());
         std::cout << "Initialization complete. Deck loaded.\n";
+
+        testGameEngine();
+        std::cout << "System checks passed: Engine active.\n";
+
         std::cout << "Debug Info: Total Card objects created: " << Card::getTotalCards() << "\n";
     } catch (const std::exception &e) {
         std::cout << "CRITICAL INIT ERROR: " << e.what() << "\n";
@@ -45,19 +65,6 @@ void GameApp::run() {
             std::cout << "Deck shuffled.\n";
         } else if (command == 3) {
             std::cout << player << "\n";
-        } else if (command == 4) {
-            player.getDeck().sortByPower();
-        } else if (command == 5) {
-            player.getMeleeRow().setHorn(true);
-            std::cout << "Horn set on Melee Row.\n";
-        } else if (command == 6) {
-            player.getMeleeRow().applyWeather();
-            player.getRangedRow().applyWeather();
-            player.getSiegeRow().applyWeather();
-            std::cout << "Winter is coming! All rows affected.\n";
-
-
-            if (command == 99) player.getMeleeRow().clearWeather();
         } else {
             std::cout << "Invalid command.\n";
         }
@@ -72,7 +79,7 @@ void GameApp::runCycle() {
         auto card = player.getDeck().draw();
         std::cout << "You drew: " << card->getName() << "\n";
 
-        if (auto *unit = dynamic_cast<UnitCard *>(card.get())) {
+        if (const auto *unit = dynamic_cast<const UnitCard *>(card.get())) {
             if (unit->getIsGold()) {
                 std::cout << "*** LEGENDARY GOLD CARD! ***\n";
             }

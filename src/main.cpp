@@ -1,7 +1,6 @@
 #include "../headers/GameApp.h"
 
 int main() {
-    GameApp app;
-    app.run();
+    GameApp::getInstance().run();
     return 0;
 }
