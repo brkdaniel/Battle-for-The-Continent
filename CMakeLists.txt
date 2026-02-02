@@ -70,6 +70,10 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         src/SpecialCard.cpp
         headers/TrapCard.h
         src/TrapCard.cpp
+        headers/GameUtils.h
+        src/GameUtils.cpp
+        headers/GameApp.h
+        src/GameApp.cpp
 
 )
 
