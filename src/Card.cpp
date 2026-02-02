@@ -14,7 +14,7 @@ Card::~Card() {
     totalCardsCreated--;
 }
 
-std::string Card::getName() const {
+const std::string &Card::getName() const {
     return name;
 }
 

@@ -21,7 +21,7 @@ public:
 
     virtual bool canBePlayedOn(RowType row) const = 0;
 
-    std::string getName() const;
+    const std::string &getName() const;
 
     static int getTotalCards();
 };

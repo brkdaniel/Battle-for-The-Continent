@@ -39,9 +39,9 @@ void Deck::shuffle() {
 }
 
 void Deck::sortByPower() {
-    std::sort(cards.begin(), cards.end(), [](const std::unique_ptr<Card> &a, const std::unique_ptr<Card> &b) {
-        auto *unitA = dynamic_cast<UnitCard *>(a.get());
-        auto *unitB = dynamic_cast<UnitCard *>(b.get());
+    std::sort(cards.begin(), cards.end(), [](const std::unique_ptr<Card>& a, const std::unique_ptr<Card>& b) {
+        const auto* unitA = dynamic_cast<const UnitCard*>(a.get());
+        const auto* unitB = dynamic_cast<const UnitCard*>(b.get());
 
         int powerA = unitA ? unitA->getCurrentPower() : 0;
         int powerB = unitB ? unitB->getCurrentPower() : 0;
