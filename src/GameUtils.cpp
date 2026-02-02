@@ -1,54 +1,46 @@
 #include "../headers/GameUtils.h"
+#include "../headers/CardFactory.h"
 #include <fstream>
+#include <sstream>
+#include <stdexcept>
 #include <iostream>
-#include <memory>
-
-#include "../headers/UnitCard.h"
-#include "../headers/WeatherCard.h"
-#include "../headers/SpecialCard.h"
-#include "../headers/TrapCard.h"
-#include "../headers/GwentExceptions.h"
 
 void loadCardsFromFile(const std::string &filename, Deck &deck) {
     std::ifstream file(filename);
     if (!file.is_open()) {
-        throw FileReadException(filename);
+        throw std::runtime_error("Could not open file: " + filename);
     }
 
-    std::cout << ">> Reading cards from file: " << filename << "...\n";
+    std::string line;
+    while (std::getline(file, line)) {
+        if (line.empty() || line[0] == '#') continue;
 
-    int type;
-    while (file >> type) {
-        std::string name;
-        file >> name;
+        std::stringstream ss(line);
+        std::string type, name, desc;
+        int val1 = 0, val2 = 0;
 
-        std::unique_ptr<Card> newCard = nullptr;
+        // Format: Type|Name|Val1|Val2|Desc
+        // Example: Unit|Soldier|5|0|None
 
-        if (type == 1) {
-            int power, id, rowInt;
-            bool isGold, isImmune;
-            file >> power >> id >> isGold >> rowInt >> isImmune;
-            auto cardType = static_cast<CardType>(rowInt);
+        std::string segment;
+        std::vector<std::string> tokens;
 
-            newCard = std::make_unique<UnitCard>(name, power, id, isGold, cardType, isImmune);
-        } else if (type == 2) {
-            int rowInt;
-            file >> rowInt;
-            newCard = std::make_unique<WeatherCard>(name, static_cast<RowType>(rowInt));
-        } else if (type == 3) {
-            std::string desc;
-            file >> desc;
-            newCard = std::make_unique<SpecialCard>(name, desc);
-        } else if (type == 4) {
-            int rowInt, dmg;
-            file >> rowInt >> dmg;
-            newCard = std::make_unique<TrapCard>(name, static_cast<RowType>(rowInt), dmg);
+        while (std::getline(ss, segment, '|')) {
+            tokens.push_back(segment);
         }
 
-        if (newCard) {
-            deck.addCard(std::move(newCard));
+        if (tokens.size() >= 2) {
+            type = tokens[0];
+            name = tokens[1];
+
+            if (tokens.size() > 2) val1 = std::stoi(tokens[2]);
+            if (tokens.size() > 3) val2 = std::stoi(tokens[3]);
+            if (tokens.size() > 4) desc = tokens[4];
+
+            auto card = CardFactory::createCard(type, name, val1, val2, desc);
+            if (card) {
+                deck.addCard(std::move(card));
+            }
         }
     }
-    file.close();
-    std::cout << ">> File read successfully.\n";
 }

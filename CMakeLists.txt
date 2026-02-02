@@ -74,6 +74,8 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         src/GameUtils.cpp
         headers/GameApp.h
         src/GameApp.cpp
+        headers/CardFactory.h
+        src/CardFactory.cpp
 
 )
 
