@@ -1,5 +1,6 @@
 #include "../headers/GameApp.h"
 #include "../headers/GameUtils.h"
+#include "../headers/UnitCard.h"
 #include <iostream>
 #include <limits>
 
@@ -11,6 +12,9 @@ void GameApp::displayMenu() const {
     std::cout << "1. Draw Card & Play\n";
     std::cout << "2. Shuffle Deck\n";
     std::cout << "3. Show Board\n";
+    std::cout << "4. Sort Deck by Power\n";
+    std::cout << "5. Cheat: Add Commander's Horn to Melee\n";
+    std::cout << "6. Cheat: Apply Weather to All Rows\n";
     std::cout << "0. Exit\n";
     std::cout << "Choose option: ";
 }
@@ -19,6 +23,7 @@ void GameApp::run() {
     try {
         loadCardsFromFile("cards.txt", player.getDeck());
         std::cout << "Initialization complete. Deck loaded.\n";
+        std::cout << "Debug Info: Total Card objects created: " << Card::getTotalCards() << "\n";
     } catch (const std::exception &e) {
         std::cout << "CRITICAL INIT ERROR: " << e.what() << "\n";
         return;
@@ -40,6 +45,19 @@ void GameApp::run() {
             std::cout << "Deck shuffled.\n";
         } else if (command == 3) {
             std::cout << player << "\n";
+        } else if (command == 4) {
+            player.getDeck().sortByPower();
+        } else if (command == 5) {
+            player.getMeleeRow().setHorn(true);
+            std::cout << "Horn set on Melee Row.\n";
+        } else if (command == 6) {
+            player.getMeleeRow().applyWeather();
+            player.getRangedRow().applyWeather();
+            player.getSiegeRow().applyWeather();
+            std::cout << "Winter is coming! All rows affected.\n";
+
+
+            if (command == 99) player.getMeleeRow().clearWeather();
         } else {
             std::cout << "Invalid command.\n";
         }
@@ -54,13 +72,38 @@ void GameApp::runCycle() {
         auto card = player.getDeck().draw();
         std::cout << "You drew: " << card->getName() << "\n";
 
-        player.getMeleeRow().addCard(std::move(card));
+        if (auto *unit = dynamic_cast<UnitCard *>(card.get())) {
+            if (unit->getIsGold()) {
+                std::cout << "*** LEGENDARY GOLD CARD! ***\n";
+            }
+        }
 
-        std::cout << "Card placed on Melee row successfully.\n";
+        std::cout << "Where do you want to place it?\n";
+        std::cout << "0. Melee Row\n1. Ranged Row\n2. Siege Row\n> ";
+
+        int rowChoice;
+        if (!(std::cin >> rowChoice)) {
+            std::cout << "Invalid input. Turn skipped, card lost.\n";
+            return;
+        }
+
+        if (rowChoice == 0) {
+            player.getMeleeRow().addCard(std::move(card));
+            std::cout << "Placed on MELEE.\n";
+        } else if (rowChoice == 1) {
+            player.getRangedRow().addCard(std::move(card));
+            std::cout << "Placed on RANGED.\n";
+        } else if (rowChoice == 2) {
+            player.getSiegeRow().addCard(std::move(card));
+            std::cout << "Placed on SIEGE.\n";
+        } else {
+            std::cout << "Invalid row index. Card lost.\n";
+        }
     } catch (const EmptyDeckException &e) {
         std::cout << "ACTION FAILED: " << e.what() << "\n";
     } catch (const InvalidMoveException &e) {
         std::cout << "ACTION FAILED: " << e.what() << "\n";
+        std::cout << "(Hint: Use 'Show Board' to check row types or read card description)\n";
     } catch (const std::exception &e) {
         std::cout << "ERROR: " << e.what() << "\n";
     }
