@@ -1,9 +1,7 @@
-//
-// Created by danie on 12/6/2025.
-//
 #pragma once
 #include <string>
 #include <iostream>
+#include "Enums.h"
 
 class Card {
 protected:
@@ -11,17 +9,19 @@ protected:
     static int totalCardsCreated;
 
 public:
-    Card(const std::string& n);
-    //functie pt a citi contorul
-    static int getTotalCards();
+    Card(const std::string &n);
+
+    Card(const Card &other);
 
     virtual ~Card();
 
-    virtual void printDetails(std::ostream& os) const = 0;
+    virtual void printDetails(std::ostream &os) const = 0;
 
-    virtual Card* clone() const = 0;
+    virtual Card *clone() const = 0;
 
-    const std::string& getName() const;
+    virtual bool canBePlayedOn(RowType row) const = 0;
 
-    friend std::ostream& operator<<(std::ostream& os, const Card& c);
+    std::string getName() const;
+
+    static int getTotalCards();
 };

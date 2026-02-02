@@ -6,21 +6,27 @@
 class UnitCard : public Card {
 private:
     int power;
-    int cardID;
-    bool is_gold;
+    int cardId;
+    bool isGold;
     CardType type;
-    bool is_immune;
+    bool isImmune;
 
 public:
-    UnitCard(const std::string& n, int p, int id, bool gold, CardType t, bool immune);
+    UnitCard(const std::string &n, int p, int id, bool gold, CardType t, bool immune);
 
-    void printDetails(std::ostream& os) const override;
-    Card* clone() const override;
+    void printDetails(std::ostream &os) const override;
 
-    // Getters si Setters necesari pentru logica din Row
+    Card *clone() const override;
+
+    bool canBePlayedOn(RowType row) const override;
+
     RowType getRowType() const;
+
     int getCurrentPower() const;
+
     void setPower(int p);
-    bool isGold() const;
-    bool isImmune() const;
+
+    bool getIsGold() const;
+
+    bool getIsImmune() const;
 };

@@ -1,16 +1,11 @@
 #include "../headers/Row.h"
 #include "../headers/UnitCard.h"
 
-Row::Row(RowType t) : type(t) {}
+Row::Row(RowType t) : type(t) {
+}
 
-bool Row::canAddCard(const Card* card) const {
-    const auto* unit = dynamic_cast<const UnitCard*>(card);
-    if (!unit) return false;
-
-    if (unit->getRowType() != type && !unit->isGold()) {
-         return false;
-    }
-    return unit->getRowType() == type;
+bool Row::canAddCard(const Card *card) const {
+    return card->canBePlayedOn(type);
 }
 
 void Row::addCard(std::unique_ptr<Card> card) {
@@ -18,10 +13,13 @@ void Row::addCard(std::unique_ptr<Card> card) {
         cards.push_back(std::move(card));
     } else {
         std::string rowName;
-        switch(type) {
-            case RowType::MELEE: rowName = "MELEE"; break;
-            case RowType::RANGED: rowName = "RANGED"; break;
-            case RowType::SIEGE: rowName = "SIEGE"; break;
+        switch (type) {
+            case RowType::MELEE: rowName = "MELEE";
+                break;
+            case RowType::RANGED: rowName = "RANGED";
+                break;
+            case RowType::SIEGE: rowName = "SIEGE";
+                break;
         }
 
         std::string cardName = card->getName();
@@ -31,8 +29,8 @@ void Row::addCard(std::unique_ptr<Card> card) {
 
 int Row::calculatePower() const {
     int total = 0;
-    for (const auto& card : cards) {
-        if (const auto* unit = dynamic_cast<const UnitCard*>(card.get())) {
+    for (const auto &card: cards) {
+        if (const auto *unit = dynamic_cast<const UnitCard *>(card.get())) {
             total += unit->getCurrentPower();
         }
     }
@@ -41,9 +39,9 @@ int Row::calculatePower() const {
 }
 
 void Row::applyWeather() {
-    for (auto& card : cards) {
-        if (auto* unit = dynamic_cast<UnitCard*>(card.get())) {
-            if (!unit->isImmune()) {
+    for (auto &card: cards) {
+        if (auto *unit = dynamic_cast<UnitCard *>(card.get())) {
+            if (!unit->getIsImmune()) {
                 unit->setPower(1);
             }
         }
@@ -57,18 +55,21 @@ void Row::setHorn(bool status) {
     hasHorn = status;
 }
 
-std::ostream& operator<<(std::ostream& os, const Row& row) {
+std::ostream &operator<<(std::ostream &os, const Row &row) {
     std::string typeStr;
-    switch(row.type) {
-        case RowType::MELEE: typeStr = "Melee"; break;
-        case RowType::RANGED: typeStr = "Ranged"; break;
-        case RowType::SIEGE: typeStr = "Siege"; break;
+    switch (row.type) {
+        case RowType::MELEE: typeStr = "Melee";
+            break;
+        case RowType::RANGED: typeStr = "Ranged";
+            break;
+        case RowType::SIEGE: typeStr = "Siege";
+            break;
     }
     os << typeStr << " Row (" << row.calculatePower() << " pts): ";
     if (row.cards.empty()) {
         os << "[Empty]";
     } else {
-        for (const auto& c : row.cards) {
+        for (const auto &c: row.cards) {
             os << c->getName() << " ";
         }
     }

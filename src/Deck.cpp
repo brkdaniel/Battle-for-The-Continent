@@ -3,18 +3,18 @@
 #include <algorithm>
 #include <random>
 
-Deck::Deck(const Deck& other) {
-    for (const auto& cardPtr : other.cards) {
+Deck::Deck(const Deck &other) {
+    for (const auto &cardPtr: other.cards) {
         cards.push_back(std::unique_ptr<Card>(cardPtr->clone()));
     }
 }
 
-void swap(Deck& first, Deck& second) noexcept {
+void swap(Deck &first, Deck &second) noexcept {
     using std::swap;
     swap(first.cards, second.cards);
 }
 
-Deck& Deck::operator=(Deck other) {
+Deck &Deck::operator=(Deck other) {
     swap(*this, other);
     return *this;
 }
@@ -39,9 +39,9 @@ void Deck::shuffle() {
 }
 
 void Deck::sortByPower() {
-    std::sort(cards.begin(), cards.end(), [](const std::unique_ptr<Card>& a, const std::unique_ptr<Card>& b) {
-        auto* unitA = dynamic_cast<UnitCard*>(a.get());
-        auto* unitB = dynamic_cast<UnitCard*>(b.get());
+    std::sort(cards.begin(), cards.end(), [](const std::unique_ptr<Card> &a, const std::unique_ptr<Card> &b) {
+        auto *unitA = dynamic_cast<UnitCard *>(a.get());
+        auto *unitB = dynamic_cast<UnitCard *>(b.get());
 
         int powerA = unitA ? unitA->getCurrentPower() : 0;
         int powerB = unitB ? unitB->getCurrentPower() : 0;
@@ -50,12 +50,12 @@ void Deck::sortByPower() {
     });
 }
 
-std::ostream& operator<<(std::ostream& os, const Deck& deck) {
+std::ostream &operator<<(std::ostream &os, const Deck &deck) {
     if (deck.cards.empty()) {
         os << "  [Empty Deck]\n";
         return os;
     }
-    for (const auto& card : deck.cards) {
+    for (const auto &card: deck.cards) {
         card->printDetails(os);
         os << "\n";
     }

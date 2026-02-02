@@ -1,16 +1,17 @@
-//
-// Created by danie on 12/7/2025.
-//
 #include "../headers/WeatherCard.h"
 
-WeatherCard::WeatherCard(const std::string& n, RowType row)
-    : Card(n), affectedRow(row)
-{}
-
-void WeatherCard::printDetails(std::ostream& os) const {
-    os << "[Weather: " << name << " | Affects Row: " << (int)affectedRow << "]";
+WeatherCard::WeatherCard(const std::string &n, RowType r)
+    : Card(n), affectedRow(r) {
 }
 
-Card* WeatherCard::clone() const {
+void WeatherCard::printDetails(std::ostream &os) const {
+    os << "[Weather: " << name << " | Affects Row: " << (int) affectedRow << "]";
+}
+
+Card *WeatherCard::clone() const {
     return new WeatherCard(*this);
+}
+
+bool WeatherCard::canBePlayedOn(RowType targetRow) const {
+    return affectedRow == targetRow;
 }

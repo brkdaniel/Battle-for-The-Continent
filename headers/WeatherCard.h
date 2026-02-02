@@ -1,19 +1,17 @@
-//
-// Created by danie on 12/7/2025.
-//
 #pragma once
 #include "Card.h"
 #include "Enums.h"
 
 class WeatherCard : public Card {
 private:
-    RowType affectedRow; // Ce rând îngheță/afectează
+    RowType affectedRow;
 
 public:
-    WeatherCard(const std::string& n, RowType row);
+    WeatherCard(const std::string &n, RowType r);
 
-    // Suprascriem metodele obligatorii
-    void printDetails(std::ostream& os) const override;
-    Card* clone() const override;
+    void printDetails(std::ostream &os) const override;
 
+    Card *clone() const override;
+
+    bool canBePlayedOn(RowType row) const override;
 };

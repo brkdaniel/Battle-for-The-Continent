@@ -10,11 +10,10 @@ private:
     bool isWeatherImmune;
 
 public:
-
     //constructor pentru stats pe carti
-    CardStats(int power, bool immune);//power(p) - liste de initializare -> power = p
+    CardStats(int power, bool immune); //power(p) - liste de initializare -> power = p
 
     int getCurrentPower() const;
 
-    friend std::ostream& operator<<(std::ostream& os, const CardStats& stats);
+    friend std::ostream &operator<<(std::ostream &os, const CardStats &stats);
 };

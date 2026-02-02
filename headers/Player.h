@@ -20,10 +20,13 @@ private:
 public:
     Player(std::string n, std::string faction);
 
-    Deck& getDeck();
-    Row& getMeleeRow();
-    Row& getRangedRow();
-    Row& getSiegeRow();
+    Deck &getDeck();
 
-    friend std::ostream& operator<<(std::ostream& os, const Player& p);
+    Row &getMeleeRow();
+
+    Row &getRangedRow();
+
+    Row &getSiegeRow();
+
+    friend std::ostream &operator<<(std::ostream &os, const Player &p);
 };

@@ -7,9 +7,11 @@ private:
     bool isRunning;
 
     void displayMenu() const;
+
     void runCycle();
 
 public:
     GameApp();
+
     void run();
 };

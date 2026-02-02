@@ -9,7 +9,7 @@
 #include "../headers/TrapCard.h"
 #include "../headers/GwentExceptions.h"
 
-void loadCardsFromFile(const std::string& filename, Deck& deck) {
+void loadCardsFromFile(const std::string &filename, Deck &deck) {
     std::ifstream file(filename);
     if (!file.is_open()) {
         throw FileReadException(filename);
@@ -31,17 +31,17 @@ void loadCardsFromFile(const std::string& filename, Deck& deck) {
             auto cardType = static_cast<CardType>(rowInt);
 
             newCard = std::make_unique<UnitCard>(name, power, id, isGold, cardType, isImmune);
-        }
-        else if (type == 2) {
-            int rowInt; file >> rowInt;
+        } else if (type == 2) {
+            int rowInt;
+            file >> rowInt;
             newCard = std::make_unique<WeatherCard>(name, static_cast<RowType>(rowInt));
-        }
-        else if (type == 3) {
-            std::string desc; file >> desc;
+        } else if (type == 3) {
+            std::string desc;
+            file >> desc;
             newCard = std::make_unique<SpecialCard>(name, desc);
-        }
-        else if (type == 4) {
-            int rowInt, dmg; file >> rowInt >> dmg;
+        } else if (type == 4) {
+            int rowInt, dmg;
+            file >> rowInt >> dmg;
             newCard = std::make_unique<TrapCard>(name, static_cast<RowType>(rowInt), dmg);
         }
 

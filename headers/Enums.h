@@ -4,4 +4,5 @@
 #pragma once
 
 enum class CardType { MELEE, RANGED, SIEGE, SPELL };
+
 enum class RowType { MELEE, RANGED, SIEGE };

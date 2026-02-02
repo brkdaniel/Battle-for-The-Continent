@@ -13,7 +13,7 @@ int CardStats::getCurrentPower() const {
 }
 
 
-std::ostream& operator<<(std::ostream& os, const CardStats& stats) {
+std::ostream &operator<<(std::ostream &os, const CardStats &stats) {
     os << " POWER: " << stats.currentPower;
     if (stats.isWeatherImmune) {
         os << " IMMUNE";
