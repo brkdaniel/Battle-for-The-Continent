@@ -1,7 +1,7 @@
 //
 // Created by danie on 12/7/2025.
 //
-#include "SpecialCard.h"
+#include "../headers/SpecialCard.h"
 
 SpecialCard::SpecialCard(const std::string& n, const std::string& desc)
     : Card(n), effectDescription(desc)

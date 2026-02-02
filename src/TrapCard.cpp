@@ -1,7 +1,7 @@
 //
 // Created by danie on 12/8/2025.
 //
-#include "TrapCard.h"
+#include "../headers/TrapCard.h"
 
 TrapCard::TrapCard(const std::string& n, RowType r, int dmg)
     : Card(n), row(r), damage(dmg)

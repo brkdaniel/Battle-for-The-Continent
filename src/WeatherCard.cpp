@@ -1,7 +1,7 @@
 //
 // Created by danie on 12/7/2025.
 //
-#include "WeatherCard.h"
+#include "../headers/WeatherCard.h"
 
 WeatherCard::WeatherCard(const std::string& n, RowType row)
     : Card(n), affectedRow(row)

@@ -1,7 +1,7 @@
 //
 // Created by danie on 12/6/2025.
 //
-#include "Card.h"
+#include "../headers/Card.h"
 
 int Card::totalCardsCreated = 0;
 

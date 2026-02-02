@@ -49,27 +49,27 @@ include(cmake/CopyHelper.cmake)
 
 # NOTE: update executable name in .github/workflows/cmake.yml:25 when changing name here
 add_executable(${MAIN_EXECUTABLE_NAME}
-    main.cpp
-        Enums.h
-        Card.h
-        CardStats.h
-        CardStats.cpp
-        Card.cpp
-        Deck.h
-        Deck.cpp
-        Row.h
-        Row.cpp
-        Player.h
-        Player.cpp
-        UnitCard.h
-        UnitCard.cpp
-        GwentExceptions.h
-        WeatherCard.h
-        WeatherCard.cpp
-        SpecialCard.h
-        SpecialCard.cpp
-        TrapCard.h
-        TrapCard.cpp
+        src/main.cpp
+        headers/Enums.h
+        headers/Card.h
+        headers/CardStats.h
+        src/CardStats.cpp
+        src/Card.cpp
+        headers/Deck.h
+        src/Deck.cpp
+        headers/Row.h
+        src/Row.cpp
+        headers/Player.h
+        src/Player.cpp
+        headers/UnitCard.h
+        src/UnitCard.cpp
+        headers/GwentExceptions.h
+        headers/WeatherCard.h
+        src/WeatherCard.cpp
+        headers/SpecialCard.h
+        src/SpecialCard.cpp
+        headers/TrapCard.h
+        src/TrapCard.cpp
 
 )
 

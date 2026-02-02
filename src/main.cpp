@@ -2,12 +2,12 @@
 #include <fstream>
 #include <string>
 
-#include "Player.h"
-#include "UnitCard.h"
-#include "WeatherCard.h"
-#include "SpecialCard.h"
-#include "GwentExceptions.h"
-#include "TrapCard.h"
+#include "../headers/Player.h"
+#include "../headers/UnitCard.h"
+#include "../headers/WeatherCard.h"
+#include "../headers/SpecialCard.h"
+#include "../headers/GwentExceptions.h"
+#include "../headers/TrapCard.h"
 
 // --- FUNCȚIE FACTORY: Citește fișierul și populează pachetul ---
 void loadCardsFromFile(const std::string& filename, Deck& deck) {

@@ -1,7 +1,7 @@
 //
 // Created by danie on 12/6/2025.
 //
-#include "Player.h"
+#include "../headers/Player.h"
 #include <utility> // Pentru std::move
 
 Player::Player(std::string n, std::string faction)

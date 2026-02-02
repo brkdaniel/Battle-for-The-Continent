@@ -2,7 +2,7 @@
 // Created by danie on 12/6/2025.
 //
 
-#include "CardStats.h"
+#include "../headers/CardStats.h"
 
 CardStats::CardStats(int power, bool immune)
     : current_power(power), is_weather_immune(immune) {
