@@ -21,7 +21,7 @@ std::unique_ptr<Card> CardFactory::createCard(const std::string &type,
     }
 
     if (type == "Weather") {
-        return std::make_unique<WeatherCard>(name, desc);
+        return std::make_unique<WeatherCard>(name, static_cast<RowType>(value2));
     }
 
     if (type == "Special") {
