@@ -41,6 +41,7 @@ int Row::calculatePower() const {
 void Row::applyWeather() {
     for (auto &card: cards) {
         if (auto *unit = dynamic_cast<UnitCard *>(card.get())) {
+            // FIX: Folosim getter-ul corect
             if (!unit->getIsImmune()) {
                 unit->setPower(1);
             }

@@ -16,12 +16,8 @@ Card *UnitCard::clone() const {
 }
 
 bool UnitCard::canBePlayedOn(RowType targetRow) const {
-    if (isGold) return true;
+    if (isGold) return true; // Eroii pot fi jucati oriunde (sau conform regulilor tale)
     return static_cast<RowType>(type) == targetRow;
-}
-
-RowType UnitCard::getRowType() const {
-    return static_cast<RowType>(type);
 }
 
 int UnitCard::getCurrentPower() const {
@@ -32,10 +28,10 @@ void UnitCard::setPower(int p) {
     power = p;
 }
 
-bool UnitCard::getIsGold() const {
-    return isGold;
-}
-
 bool UnitCard::getIsImmune() const {
     return isImmune;
+}
+
+bool UnitCard::getIsGold() const {
+    return isGold;
 }

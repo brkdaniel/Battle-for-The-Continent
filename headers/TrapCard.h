@@ -4,8 +4,8 @@
 
 class TrapCard : public Card {
 private:
-    RowType row;
-    int damage;
+    RowType row = RowType::MELEE;
+    int damage = 0;
 
 public:
     TrapCard(const std::string &n, RowType r, int dmg);

@@ -5,11 +5,11 @@
 
 class UnitCard : public Card {
 private:
-    int power;
-    int cardId;
-    bool isGold;
-    CardType type;
-    bool isImmune;
+    int power = 0;
+    int cardId = 0;
+    bool isGold = false;
+    CardType type = CardType::MELEE;
+    bool isImmune = false;
 
 public:
     UnitCard(const std::string &n, int p, int id, bool gold, CardType t, bool immune);
@@ -20,13 +20,10 @@ public:
 
     bool canBePlayedOn(RowType row) const override;
 
-    RowType getRowType() const;
-
     int getCurrentPower() const;
 
     void setPower(int p);
 
-    bool getIsGold() const;
-
     bool getIsImmune() const;
+    bool getIsGold() const;
 };

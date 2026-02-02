@@ -4,7 +4,7 @@
 
 class WeatherCard : public Card {
 private:
-    RowType affectedRow;
+    RowType affectedRow = RowType::MELEE;
 
 public:
     WeatherCard(const std::string &n, RowType r);
