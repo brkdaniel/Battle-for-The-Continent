@@ -53,6 +53,11 @@ void GameApp::run() {
         displayMenu();
         int command;
         if (!(std::cin >> command)) {
+            if (std::cin.eof()) {
+                std::cout << "End of input detected. Exiting loop.\n";
+                isRunning = false;
+                continue;
+            }
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             continue;
