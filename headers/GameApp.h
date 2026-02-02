@@ -1,6 +1,3 @@
-
-#ifndef OOP_GAMEAPP_H
-#define OOP_GAMEAPP_H
 #pragma once
 #include "Player.h"
 
@@ -16,5 +13,3 @@ public:
     GameApp();
     void run();
 };
-
-#endif //OOP_GAMEAPP_H

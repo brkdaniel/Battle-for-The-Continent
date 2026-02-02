@@ -17,8 +17,3 @@ public:
     Card* clone() const override;
 
 };
-
-#ifndef OOP_WEATHEREFFECT_H
-#define OOP_WEATHEREFFECT_H
-
-#endif //OOP_WEATHEREFFECT_H

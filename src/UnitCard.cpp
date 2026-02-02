@@ -1,7 +1,7 @@
 #include "../headers/UnitCard.h"
 
 UnitCard::UnitCard(const std::string& n, int p, int id, bool gold, CardType t, bool immune)
-    : Card(n), power(p), card_ID(id), is_gold(gold), type(t), is_immune(immune) 
+    : Card(n), power(p), cardID(id), is_gold(gold), type(t), is_immune(immune)
 {}
 
 void UnitCard::printDetails(std::ostream& os) const {
@@ -16,7 +16,7 @@ Card* UnitCard::clone() const {
 }
 
 RowType UnitCard::getRowType() const {
-    // Convertim CardType (MELEE/RANGED/SIEGE) in RowType
+    // convertesc CardType in RowType
     return static_cast<RowType>(type);
 }
 

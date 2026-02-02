@@ -36,7 +36,7 @@ int Row::calculatePower() const {
             total += unit->getCurrentPower();
         }
     }
-    if (has_horn) total *= 2;
+    if (hasHorn) total *= 2;
     return total;
 }
 
@@ -54,7 +54,7 @@ void Row::clearWeather() {
 }
 
 void Row::setHorn(bool status) {
-    has_horn = status;
+    hasHorn = status;
 }
 
 std::ostream& operator<<(std::ostream& os, const Row& row) {
@@ -72,6 +72,6 @@ std::ostream& operator<<(std::ostream& os, const Row& row) {
             os << c->getName() << " ";
         }
     }
-    if (row.has_horn) os << " [Commander's Horn Active]";
+    if (row.hasHorn) os << " [Commander's Horn Active]";
     return os;
 }

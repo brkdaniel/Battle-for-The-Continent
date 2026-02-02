@@ -23,7 +23,6 @@ const std::string& Card::getName() const {
 }
 
 std::ostream& operator<<(std::ostream& os, const Card& c) {
-    // Polimorfism: Apelează funcția specifică tipului real (UnitCard, WeatherCard etc.)
     c.printDetails(os);
     return os;
 }

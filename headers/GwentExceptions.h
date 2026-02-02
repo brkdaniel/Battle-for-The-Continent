@@ -13,7 +13,6 @@ public:
         : std::runtime_error("GWENT ERROR: " + message) {}
 };
 
-// PACHET GOL - resurse
 class EmptyDeckException : public GwentException {
 public:
     EmptyDeckException()
@@ -33,8 +32,3 @@ public:
     explicit FileReadException(const std::string& fileName)
         : GwentException("Critical error: Could not open or read file: " + fileName) {}
 };
-
-#ifndef OOP_GWENTEXCEPTION_H
-#define OOP_GWENTEXCEPTION_H
-
-#endif //OOP_GWENTEXCEPTION_H

@@ -6,22 +6,22 @@
 
 Player::Player(std::string n, std::string faction)
     : name(std::move(n)),
-      faction_name(std::move(faction)),
-      melee_row(RowType::MELEE),
-      ranged_row(RowType::RANGED),
-      siege_row(RowType::SIEGE)
+      factionName(std::move(faction)),
+      meleeRow(RowType::MELEE),
+      rangedRow(RowType::RANGED),
+      siegeRow(RowType::SIEGE)
 {}
 
 Deck& Player::getDeck() { return deck; }
-Row& Player::getMeleeRow() { return melee_row; }
-// Row& Player::getRangedRow() { return ranged_row; }
-// Row& Player::getSiegeRow() { return siege_row; }
+Row& Player::getMeleeRow() { return meleeRow; }
+Row& Player::getRangedRow() { return rangedRow; }
+Row& Player::getSiegeRow() { return siegeRow; }
 
 std::ostream& operator<<(std::ostream& os, const Player& p) {
-    os << "*** PLAYER " << p.name << " HAS A " << p.faction_name << " DECK" << std::endl;
+    os << "*** PLAYER " << p.name << " HAS A " << p.factionName << " DECK" << std::endl;
     os << p.deck << std::endl;
-    os << p.melee_row << std::endl;
-    os << p.ranged_row << std::endl;
-    os << p.siege_row << std::endl;
+    os << p.meleeRow << std::endl;
+    os << p.rangedRow << std::endl;
+    os << p.siegeRow << std::endl;
     return os;
 }

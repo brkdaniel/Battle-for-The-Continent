@@ -11,7 +11,7 @@ class Row {
 private:
     RowType type;
     std::vector<std::unique_ptr<Card>> cards;
-    bool has_horn = false;
+    bool hasHorn = false;
 
     bool canAddCard(const Card* card) const;
 

@@ -15,8 +15,3 @@ public:
     void printDetails(std::ostream& os) const override;
     Card* clone() const override;
 };
-
-#ifndef OOP_SPECIALCARD_H
-#define OOP_SPECIALCARD_H
-
-#endif //OOP_SPECIALCARD_H

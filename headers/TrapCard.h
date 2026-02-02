@@ -16,8 +16,3 @@ public:
     void printDetails(std::ostream& os) const override;
     Card* clone() const override;
 };
-
-#ifndef OOP_TRAPCARDS_H
-#define OOP_TRAPCARDS_H
-
-#endif //OOP_TRAPCARDS_H

@@ -11,11 +11,11 @@
 class Player {
 private:
     std::string name;
-    std::string faction_name;
+    std::string factionName;
     Deck deck;
-    Row melee_row;
-    Row ranged_row;
-    Row siege_row;
+    Row meleeRow;
+    Row rangedRow;
+    Row siegeRow;
 
 public:
     Player(std::string n, std::string faction);
@@ -27,8 +27,3 @@ public:
 
     friend std::ostream& operator<<(std::ostream& os, const Player& p);
 };
-
-#ifndef OOP_PLAYER_H
-#define OOP_PLAYER_H
-
-#endif //OOP_PLAYER_H

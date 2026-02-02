@@ -6,7 +6,7 @@
 class UnitCard : public Card {
 private:
     int power;
-    int card_ID;
+    int cardID;
     bool is_gold;
     CardType type;
     bool is_immune;

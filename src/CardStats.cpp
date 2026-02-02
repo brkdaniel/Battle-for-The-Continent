@@ -5,17 +5,17 @@
 #include "../headers/CardStats.h"
 
 CardStats::CardStats(int power, bool immune)
-    : current_power(power), is_weather_immune(immune) {
+    : currentPower(power), isWeatherImmune(immune) {
 }
 
 int CardStats::getCurrentPower() const {
-    return current_power;
+    return currentPower;
 }
 
 
 std::ostream& operator<<(std::ostream& os, const CardStats& stats) {
-    os << " POWER: " << stats.current_power;
-    if (stats.is_weather_immune) {
+    os << " POWER: " << stats.currentPower;
+    if (stats.isWeatherImmune) {
         os << " IMMUNE";
     }
     return os;

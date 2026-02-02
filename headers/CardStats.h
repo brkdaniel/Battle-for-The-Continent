@@ -6,8 +6,8 @@
 
 class CardStats {
 private:
-    int current_power;
-    bool is_weather_immune;
+    int currentPower;
+    bool isWeatherImmune;
 
 public:
 
@@ -18,8 +18,3 @@ public:
 
     friend std::ostream& operator<<(std::ostream& os, const CardStats& stats);
 };
-
-#ifndef OOP_CARDSTATS_H
-#define OOP_CARDSTATS_H
-
-#endif //OOP_CARDSTATS_H
