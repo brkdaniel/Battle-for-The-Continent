@@ -17,6 +17,7 @@ Row& Player::getMeleeRow() { return meleeRow; }
 Row& Player::getRangedRow() { return rangedRow; }
 Row& Player::getSiegeRow() { return siegeRow; }
 
+
 std::ostream& operator<<(std::ostream& os, const Player& p) {
     os << "*** PLAYER " << p.name << " HAS A " << p.factionName << " DECK" << std::endl;
     os << p.deck << std::endl;
