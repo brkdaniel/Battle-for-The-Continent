@@ -1,8 +1,11 @@
 #include "../headers/GameApp.h"
 #include "../headers/GameUtils.h"
 #include "../headers/UnitCard.h"
+#include "../headers/WeatherCard.h"
 #include <iostream>
 #include <limits>
+
+class WeatherCard;
 
 GameApp::GameApp() : player("Daniel", "Northern Realms"), isRunning(true) {
 }
@@ -24,6 +27,8 @@ void GameApp::testGameEngine() {
     if (player.getSiegeRow().calculatePower() < 0) {
         std::cout << "Engine Check: Siege row integrity ok.\n";
     }
+    auto weatherCards = player.getDeck().getCardsOfType<WeatherCard>();
+    std::cout << "Engine Check: Found " << weatherCards.size() << " Weather cards in deck.\n";
 }
 
 void GameApp::displayMenu() const {
