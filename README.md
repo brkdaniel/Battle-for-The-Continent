@@ -1,142 +1,34 @@
-# Battle for The Continent
+# Battle for The Continent (C++ Card Game Engine
 
-Battle for the Continent este un card game inspirat din celebrul Gwent, jocul de carti din universul The Witcher. In acest joc te vei duela cu un AI sau prietenul tau cel mai bun, local, pentru a castiga suprematia asupra Continentului, folosind deck-ul propriu, corespunzator factiunii din care faci parte. Jocul va avea formatul Gwent-ului, folosind si cateva mecanici inspirate din Hearthstone. Pentru a putea infrange adversarul tau, trebuie sa castigi 2/3 runde, iar pentru a castiga o runda esti nevoit sa ai mai multa putere (reprezentata numeric) a cartilor plasate pe masa la incheierea fiecareia, dar sa ai in vedere gestionarea corespunzatoare a resurselor si a cartilor puternice, astfel incat sa nu fi pacalit sa iti plasezi prea rapid cele mai puternice carti, pentru a nu irosi prematur potentialul "mainii" tale.
-### Folosiți template-ul corespunzător grupei voastre!
+A text-based card game inspired from Gwent, The Witcher 3 card-game. I built the engine from scratch using modern C++
+This project is like a playground where I applied core Object-Oriented Programming (OOP) concepts, memory safety rules, and automated testing.
 
-| Laborant  | Link template                                |
-|-----------|----------------------------------------------|
-| Dragoș B  | https://github.com/Ionnier/oop-template      |
-| Tiberiu M | https://github.com/MaximTiberiu/oop-template |
-| Marius MC | https://github.com/mcmarius/oop-template     |
+## ⚙️ Technical Features
 
-### Important!
+I focused on writing clean, scalable, and crash-free code. Here is how the engine is built:
 
-Aveți voie cu cod generat de modele de limbaj la care nu ați contribuit semnificativ doar dacă documentați riguros acest proces.
-Codul generat pus "ca să fie"/pe care nu îl înțelegeți se punctează doar pentru puncte bonus, doar în contextul
-în care oferă funcționalități ajutătoare și doar dacă are sens.
-
-Codul din proiect trebuie să poată fi ușor de înțeles și de modificat de către altcineva. Pentru detalii, veniți la ore.
-
-O cerință nu se consideră îndeplinită dacă este realizată doar prin cod generat.
-
-- **Fără cod de umplutură/fără sens!**
-- **Fără copy-paste!**
-- **Fără variabile globale!**
-- **Fără atribute publice!**
-- **Pentru T2 și T3, fără date în cod!** Datele vor fi citite din fișier, aveți exemple destule.
-- **Obligatoriu** fișiere cu date mai multe din care să citiți, obligatoriu cu biblioteci externe: fișiere (local sau server) sau baze de date
-- obligatoriu (TBD) să integrați cel puțin două biblioteci externe pe lângă cele pentru stocare
-
-### Tema 0
-
-- [ ] Nume proiect (poate fi schimbat ulterior)
-- [ ] Scurtă descriere a temei alese, ce v-ați propus să implementați
-
-## Tema 1
-
-#### Cerințe
-- [ ] definirea a minim **3-4 clase** folosind compunere cu clasele definite de voi; moștenirile nu se iau în considerare aici
-- [ ] constructori de inițializare cu parametri pentru fiecare clasă
-- [ ] pentru o aceeași (singură) clasă: constructor de copiere, `operator=` de copiere, destructor
-<!-- - [ ] pentru o altă clasă: constructor de mutare, `operator=` de mutare, destructor -->
-<!-- - [ ] pentru o altă clasă: toate cele 5 funcții membru speciale -->
-- [ ] `operator<<` pentru **toate** clasele pentru afișare (`std::ostream`) folosind compunere de apeluri cu `operator<<`
-- [ ] cât mai multe `const` (unde este cazul) și funcții `private`
-- [ ] implementarea a minim 3 funcții membru publice pentru funcționalități netriviale specifice temei alese, dintre care cel puțin 1-2 funcții mai complexe
-  - nu doar citiri/afișări sau adăugat/șters elemente într-un/dintr-un vector
-- [ ] scenariu de utilizare **cu sens** a claselor definite:
-  - crearea de obiecte și apelarea tuturor funcțiilor membru publice în main
-  - vor fi adăugate în fișierul `tastatura.txt` DOAR exemple de date de intrare de la tastatură (dacă există); dacă aveți nevoie de date din fișiere, creați alte fișiere separat
-- [ ] minim 50-55% din codul propriu să fie C++, `.gitattributes` configurat corect
-- [ ] tag de `git`: de exemplu `v0.1`
-- [ ] serviciu de integrare continuă (CI) cu **toate bifele**; exemplu: GitHub Actions
-- [ ] code review #1 2 proiecte
-
-## Tema 2
-
-#### Cerințe
-- [ ] separarea codului din clase în `.h` (sau `.hpp`) și `.cpp`
-- [ ] moșteniri:
-  - minim o clasă de bază și **3 clase derivate** din aceeași ierarhie
-  - ierarhia trebuie să fie cu bază proprie, nu derivată dintr-o clasă predefinită
-  - [ ] funcții virtuale (pure) apelate prin pointeri de bază din clasa care conține atributul de tip pointer de bază
-    - minim o funcție virtuală va fi **specifică temei** (i.e. nu simple citiri/afișări sau preluate din biblioteci i.e. draw/update/render)
-    - constructori virtuali (clone): sunt necesari, dar nu se consideră funcții specifice temei
-    - afișare virtuală, interfață non-virtuală
-  - [ ] apelarea constructorului din clasa de bază din constructori din derivate
-  - [ ] clasă cu atribut de tip pointer la o clasă de bază cu derivate; aici apelați funcțiile virtuale prin pointer de bază, eventual prin interfața non-virtuală din bază
-    - [ ] suprascris cc/op= pentru copieri/atribuiri corecte, copy and swap
-    - [ ] `dynamic_cast`/`std::dynamic_pointer_cast` pentru downcast cu sens
-    - [ ] smart pointers (recomandat, opțional)
-- [ ] excepții
-  - [ ] ierarhie proprie cu baza `std::exception` sau derivată din `std::exception`; minim **3** clase pentru erori specifice distincte
-    - clasele de excepții trebuie să trateze categorii de erori distincte (exemplu de erori echivalente: citire fișiere cu diverse extensii)
-  - [ ] utilizare cu sens: de exemplu, `throw` în constructor (sau funcție care întoarce un obiect), `try`/`catch` în `main`
-  - această ierarhie va fi complet independentă de ierarhia cu funcții virtuale
-- [ ] funcții și atribute `static`
-- [ ] STL
-- [ ] cât mai multe `const`
-- [ ] funcții *de nivel înalt*, de eliminat cât mai mulți getters/setters/funcții low-level
-- [ ] minim 75-80% din codul propriu să fie C++
-- [ ] la sfârșit: commit separat cu adăugarea unei noi clase derivate fără a modifica restul codului, **pe lângă cele 3 derivate deja adăugate** din aceeași ierarhie
-  - noua derivată nu poate fi una existentă care a fost ștearsă și adăugată din nou
-  - noua derivată va fi integrată în codul existent (adică va fi folosită, nu adăugată doar ca să fie)
-- [ ] tag de `git` pe commit cu **toate bifele**: de exemplu `v0.2`
-- [ ] code review #2 2 proiecte
-
-## Tema 3
-
-#### Cerințe
-- [ ] 2 șabloane de proiectare (design patterns)
-- [ ] o clasă șablon cu sens; minim **2 instanțieri**
-  - [ ] preferabil și o funcție șablon (template) cu sens; minim 2 instanțieri
-- [ ] minim 85% din codul propriu să fie C++
-<!-- - [ ] o specializare pe funcție/clasă șablon -->
-- [ ] tag de `git` pe commit cu **toate bifele**: de exemplu `v0.3` sau `v1.0`
-- [ ] code review #3 2 proiecte
-
-## Instrucțiuni de compilare
-
-Proiectul este configurat cu CMake.
-
-Instrucțiuni pentru terminal:
-
-1. Pasul de configurare
-```sh
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
-# sau ./scripts/cmake.sh configure
-```
-
-Sau pe Windows cu GCC folosind Git Bash:
-```sh
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -G Ninja
-# sau ./scripts/cmake.sh configure -g Ninja
-```
-
-La acest pas putem cere să generăm fișiere de proiect pentru diverse medii de lucru.
+* **No Manual Memory Management:** I used Smart Pointers (`std::unique_ptr`) exclusively for managing the deck and the cards on the board. This guarantees zero memory leaks and eliminates the need for manual `delete` calls.
+* **Design Patterns:**
+  * **Factory Pattern (`CardFactory`):** Instead of hardcoding card creation, the Factory dynamically generates the right type of card (Unit, Weather, Special) based on input data (like a text file).
+  * **Singleton (`GameApp`):** Ensures there is only one central game engine running the main loop.
+* **Templates & Generic Programming:** The `Deck` class uses template methods (e.g., `getCardsOfType<T>()`) to easily filter and find specific card types without writing duplicate code.
+* **STL Algorithms:** Replaced traditional `for` loops with modern C++ algorithms like `std::accumulate` (for calculating row power) and `std::sort` with lambda expressions.
+* **Polymorphism:** A solid base `Card` class allows derived cards to have their own specific rules (e.g., a `WeatherCard` acts differently than a `UnitCard`).
 
 
-2. Pasul de compilare
-```sh
-cmake --build build --config Debug --parallel 6
-# sau ./scripts/cmake.sh build
-```
 
-Cu opțiunea `parallel` specificăm numărul de fișiere compilate în paralel.
+## ⚙️ DevOps & Code Quality
 
+It works on my machine, but I wanted to make sure it works everywhere. The repository includes an automated CI/CD pipeline:
+* **GitHub Actions:** Automatically compiles and tests the project on every push.
+* **Memory Safety:** The pipeline runs **Valgrind**, **AddressSanitizer (ASan)**, and **MemorySanitizer (MSan)** to prove the code is free of leaks and undefined behavior.
+* **Static Analysis:** Integrated **Cppcheck** to enforce strict C++ coding styles and catch performance warnings.
 
-3. Pasul de instalare (opțional)
-```sh
-cmake --install build --config Debug --prefix install_dir
-# sau ./scripts/cmake.sh install
-```
+## 🗺️ What's Next
 
-Vezi și [`scripts/cmake.sh`](scripts/cmake.sh).
+This project is still in the works. While the core engine and memory management are stable, here is what I am planning to implement next:
 
-Observație: folderele `build/` și `install_dir/` sunt adăugate în fișierul `.gitignore` deoarece
-conțin fișiere generate și nu ne ajută să le versionăm.
-
-
-## Resurse
-
-- adăugați trimiteri **detaliate** către resursele externe care v-au ajutat sau pe care le-ați folosit
+* **[In Progress]** Advanced game loop with complete turn-based mechanics and win/loss conditions.
+* **[Planned]** Implementation of more Design Patterns (e.g., Observer for event handling when cards are played).
+* **[Planned]** Expanded deck varieties and custom card abilities.
+* **[Future]** A potential migration from text-based CLI to a graphical interface (GUI).
